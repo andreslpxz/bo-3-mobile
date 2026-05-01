@@ -16,6 +16,10 @@ var shoot_timer: float  = 0.0
 var virtual_shoot: bool = false
 
 # Rutas
+
+@onready var shoot_sound: AudioStreamPlayer3D = $ShootSound
+@onready var reload_sound: AudioStreamPlayer3D = $ReloadSound
+
 @onready var camera: Camera3D        = $"../../../Camera3D"
 @onready var player: CharacterBody3D = $"../../../../"
 
@@ -40,6 +44,8 @@ func _shoot() -> void:
 
 	shoot_timer = fire_rate
 	ammo_in_mag -= 1
+	shoot_sound.play()
+
 
 	var spread: float = ads_spread if player.is_ads else bullet_spread
 
@@ -70,6 +76,8 @@ func _shoot() -> void:
 func _start_reload() -> void:
 	is_reloading = true
 	can_shoot = false
+	reload_sound.play()
+
 
 	await get_tree().create_timer(reload_time).timeout
 
