@@ -1,0 +1,77 @@
+extends Node3D
+
+# ─── Stats del arma ────────────────────────────────────────
+@export var damage        := 25.0
+@export var fire_rate     := 0.09
+@export var mag_size      := 30
+@export var reload_time   := 2.0
+@export var bullet_spread := 0.015
+@export var ads_spread    := 0.002
+
+var ammo_in_mag    := 30
+var ammo_reserve   := 210
+var can_shoot      := true
+var is_reloading   := false
+var shoot_timer    := 0.0
+
+# Ruta corregida: Weapon está en Player/Head/Camera3D/WeaponHolder/Weapon
+# Por tanto: parent=WeaponHolder, ../=Camera3D, ../../=Head, ../../../=Player
+@onready var camera: Camera3D          = $"../../../Camera3D"
+@onready var player: CharacterBody3D   = $"../../../../"
+
+func _process(delta: float) -> void:
+	shoot_timer = max(0.0, shoot_timer - delta)
+
+	if Input.is_action_pressed("shoot") and can_shoot \
+	and not is_reloading and ammo_in_mag > 0:
+		_shoot()
+
+	if Input.is_action_just_pressed("reload") \
+	and not is_reloading and ammo_in_mag < mag_size and ammo_reserve > 0:
+		_start_reload()
+
+	if ammo_in_mag == 0 and ammo_reserve > 0 and not is_reloading:
+		_start_reload()
+
+func _shoot() -> void:
+	if shoot_timer > 0.0: return
+	shoot_timer = fire_rate
+	ammo_in_mag -= 1
+
+	var spread := ads_spread if player.is_ads else bullet_spread
+	var ray_dir := -camera.global_transform.basis.z
+	ray_dir += Vector3(
+		randf_range(-spread, spread),
+		randf_range(-spread, spread),
+		0.0
+	)
+	ray_dir = ray_dir.normalized()
+
+	var query := PhysicsRayQueryParameters3D.create(
+		camera.global_position,
+		camera.global_position + ray_dir * 500.0
+	)
+	query.exclude = [player]
+
+	var result: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
+	if not result.is_empty():
+		if result.collider.has_method("take_damage"):
+			result.collider.take_damage(damage)
+
+	_play_shoot_effects()
+
+func _start_reload() -> void:
+	is_reloading = true
+	can_shoot    = false
+	await get_tree().create_timer(reload_time).timeout
+	var needed        := mag_size - ammo_in_mag
+	var loaded        := min(needed, ammo_reserve)
+	ammo_in_mag      += loaded
+	ammo_reserve     -= loaded
+	is_reloading      = false
+	can_shoot         = true
+
+func _play_shoot_effects() -> void:
+	var tween := create_tween()
+	tween.tween_property(self, "position:z", 0.05, 0.04)
+	tween.tween_property(self, "position:z", 0.0,  0.08)

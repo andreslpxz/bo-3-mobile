@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://csgu88i6lngqg"]
+
+[ext_resource type="Script" uid="uid://cgy64frdd35tq" path="res://scripts/player_controller.gd" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://h2vgeq45rid7" path="res://scenes/Weapon.tscn" id="2_weapon"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+radius = 0.4
+height = 1.8
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="Head" type="Node3D" parent="."]
+position = Vector3(0, 0.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+fov = 90.0
+
+[node name="WeaponHolder" type="Node3D" parent="Head/Camera3D"]
+position = Vector3(0.15, -0.15, -0.35)
+
+[node name="Weapon" parent="Head/Camera3D/WeaponHolder" instance=ExtResource("2_weapon")]

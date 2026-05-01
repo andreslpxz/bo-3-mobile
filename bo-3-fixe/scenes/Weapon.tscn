@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://h2vgeq45rid7"]
+
+[ext_resource type="Script" uid="uid://doqt52s8emj1r" path="res://scripts/weapon_system.gd" id="1_weapon"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_weapon"]
+size = Vector3(0.08, 0.08, 0.4)
+
+[node name="Weapon" type="Node3D"]
+script = ExtResource("1_weapon")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_weapon")
+
+[node name="MuzzlePoint" type="Node3D" parent="."]
+position = Vector3(0, 0, -0.25)

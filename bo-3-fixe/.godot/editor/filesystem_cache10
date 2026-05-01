@@ -1,0 +1,14 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1777612734
+icon.svg::CompressedTexture2D::2619840955573150515::1777612773::1777612773::1::::<><><>0<>0<>19fa92d3439c025a470eda70fed57a0c<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://scenes/::1777612734
+HUD.tscn::PackedScene::5597808870944688769::1777612773::0::1::::<><><>0<>0<><>::uid://beda40qn7h766::::res://scripts/hud.gd<>res://scripts/crosshair.gd<>res://scripts/hit_marker.gd
+Main.tscn::PackedScene::-1::1777612773::0::1::::<><><>0<>0<><>::res://scenes/player.tscn<>res://scenes/HUD.tscn
+player.tscn::PackedScene::6049901837502040886::1777612773::0::1::::<><><>0<>0<><>::uid://cgy64frdd35tq::::res://scripts/player_controller.gd<>uid://h2vgeq45rid7::::res://scenes/Weapon.tscn
+Weapon.tscn::PackedScene::548346112606031918::1777612773::0::1::::<><><>0<>0<><>::uid://doqt52s8emj1r::::res://scripts/weapon_system.gd
+::res://scripts/::1777612734
+crosshair.gd::GDScript::4151350521302545844::1777612773::0::1::::<>Control<><>0<>0<><>::
+hit_marker.gd::GDScript::6965242337201882548::1777612773::0::1::::<>Control<><>0<>0<><>::
+hud.gd::GDScript::7605466139778001633::1777612773::0::1::::<>CanvasLayer<><>0<>0<><>::
+player_controller.gd::GDScript::7948998078098307206::1777612773::0::1::::<>CharacterBody3D<><>0<>0<><>::
+weapon_system.gd::GDScript::2190869581988680277::1777612773::0::1::::<>Node3D<><>0<>0<><>::
