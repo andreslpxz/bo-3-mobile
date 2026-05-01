@@ -1,15 +1,13 @@
-[gd_scene format=3 uid="uid://h2vgeq45rid7"]
+[gd_scene load_steps=3 format=3 uid="uid://h2vgeq45rid7"]
 
 [ext_resource type="Script" uid="uid://doqt52s8emj1r" path="res://scripts/weapon_system.gd" id="1_weapon"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_weapon"]
-size = Vector3(0.08, 0.08, 0.4)
+[ext_resource type="PackedScene" path="res://assets/models/mp5.glb" id="2_mp5"]
 
 [node name="Weapon" type="Node3D"]
 script = ExtResource("1_weapon")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_weapon")
+[node name="mp5" parent="." instance=ExtResource("2_mp5")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.1, 0)
 
 [node name="MuzzlePoint" type="Node3D" parent="."]
-position = Vector3(0, 0, -0.25)
+position = Vector3(0, 0.05, -0.4)

@@ -6,7 +6,7 @@ const SPRINT_SPEED       := 10.0
 const SLIDE_SPEED        := 14.0
 const JUMP_VELOCITY      := 6.5
 const GRAVITY            := 20.0
-const MOUSE_SENS         := 0.002
+var MOUSE_SENS         := 0.002
 
 # ─── Doble salto ───────────────────────────────────────────
 const MAX_JUMPS          := 2
@@ -28,7 +28,7 @@ const WALL_RUN_SPEED     := 9.0
 # ─── ADS ───────────────────────────────────────────────────
 var is_ads               := false
 const ADS_FOV            := 60.0
-const HIP_FOV            := 90.0
+var HIP_FOV            := 90.0
 const ADS_SPEED_MULT     := 0.6
 
 # ─── Cámara ────────────────────────────────────────────────
@@ -55,6 +55,9 @@ var virtual_sprint := false
 @onready var collision: CollisionShape3D   = $CollisionShape3D
 
 func _ready() -> void:
+	MOUSE_SENS = Global.sensitivity
+	HIP_FOV = Global.fov
+
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera.fov = HIP_FOV
 	add_to_group("player")
