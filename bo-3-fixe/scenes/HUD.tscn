@@ -4,7 +4,21 @@
 [ext_resource type="Script" path="res://scripts/crosshair.gd" id="2_crosshair"]
 [ext_resource type="Script" path="res://scripts/hit_marker.gd" id="3_hitmarker"]
 
-[node name="HUD" type="CanvasLayer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnNormal"]
+bg_color = Color(1, 1, 1, 0.3)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BtnPressed"]
+bg_color = Color(1, 1, 1, 0.6)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[node name="HUD" type="CanvasLayer" groups=["hud"]]
 script = ExtResource("1_hud")
 
 [node name="AmmoLabel" type="Label" parent="."]
@@ -97,39 +111,6 @@ offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="JoystickRight" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -220.0
-offset_right = -20.0
-offset_bottom = -20.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="JoystickRightBase" type="Control" parent="JoystickRight"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="JoystickRightKnob" type="Control" parent="JoystickRight"]
-layout_mode = 1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -30.0
-offset_right = 30.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="ButtonsRight" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 3
@@ -137,39 +118,78 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -420.0
-offset_top = -120.0
-offset_right = -230.0
-offset_bottom = -20.0
+offset_left = -450.0
+offset_top = -300.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
+
+[node name="ShootBtn" type="Button" parent="ButtonsRight"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -220.0
+offset_right = -40.0
+offset_bottom = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnPressed")
+text = "SHOOT"
 
 [node name="JumpBtn" type="Button" parent="ButtonsRight"]
 layout_mode = 1
+anchors_preset = 3
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
-offset_left = -70.0
-offset_top = 30.0
-offset_right = 0.0
-offset_bottom = 100.0
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -120.0
+offset_right = -190.0
+offset_bottom = -30.0
 grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnPressed")
 text = "JUMP"
 
 [node name="SprintBtn" type="Button" parent="ButtonsRight"]
 layout_mode = 1
-offset_left = 0.0
-offset_top = 30.0
-offset_right = 70.0
-offset_bottom = 100.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -390.0
+offset_top = -120.0
+offset_right = -300.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnPressed")
 text = "RUN"
 
 [node name="ReloadBtn" type="Button" parent="ButtonsRight"]
 layout_mode = 1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -35.0
-offset_top = 0.0
-offset_right = 35.0
-offset_bottom = 25.0
-grow_horizontal = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -290.0
+offset_right = -50.0
+offset_bottom = -230.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_BtnNormal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_BtnPressed")
 text = "R"

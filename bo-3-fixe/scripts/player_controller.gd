@@ -111,8 +111,8 @@ func _handle_movement(delta: float) -> void:
 	if Input.is_action_pressed("move_right"):   dir += transform.basis.x
 	# Input joystick virtual (se combina con teclado)
 	if virtual_move.length() > 0.1:
-		dir -= transform.basis.z * virtual_move.y
-		dir -= transform.basis.x * virtual_move.x
+		dir += transform.basis.z * virtual_move.y
+		dir += transform.basis.x * virtual_move.x
 	dir = dir.normalized()
 	var speed := WALK_SPEED
 	if Input.is_action_pressed("sprint") or virtual_sprint: speed = SPRINT_SPEED

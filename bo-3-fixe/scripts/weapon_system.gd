@@ -13,6 +13,7 @@ var ammo_reserve: int   = 210
 var can_shoot: bool     = true
 var is_reloading: bool  = false
 var shoot_timer: float  = 0.0
+var virtual_shoot: bool = false
 
 # Rutas
 @onready var camera: Camera3D        = $"../../../Camera3D"
@@ -21,7 +22,7 @@ var shoot_timer: float  = 0.0
 func _process(delta: float) -> void:
 	shoot_timer = max(0.0, shoot_timer - delta)
 
-	if Input.is_action_pressed("shoot") and can_shoot \
+	if (Input.is_action_pressed("shoot") or virtual_shoot) and can_shoot \
 	and not is_reloading and ammo_in_mag > 0:
 		_shoot()
 

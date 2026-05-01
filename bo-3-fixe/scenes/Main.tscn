@@ -2,6 +2,27 @@
 
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/HUD.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/Enemy.tscn" id="3_enemy"]
+
+
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_abc12"]
+sky_top_color = Color(0.385, 0.454, 0.55, 1)
+sky_horizon_color = Color(0.646, 0.656, 0.67, 1)
+ground_bottom_color = Color(0.2, 0.169, 0.133, 1)
+ground_horizon_color = Color(0.646, 0.656, 0.67, 1)
+
+[sub_resource type="Sky" id="Sky_abc12"]
+sky_material = SubResource("ProceduralSkyMaterial_abc12")
+
+[sub_resource type="Environment" id="Environment_abc12"]
+background_mode = 2
+sky = SubResource("Sky_abc12")
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.2
+ssr_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
 size = Vector3(40, 1, 40)
@@ -44,6 +65,9 @@ albedo_color = Color(0.4, 0.45, 0.5, 1.0)
 
 [node name="Main" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_abc12")
+
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector3(0, 2, 0)
 
@@ -51,9 +75,10 @@ position = Vector3(0, 2, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 position = Vector3(0, 10, 0)
-rotation = Vector3(-0.785, 0.524, 0)
-light_energy = 1.2
+rotation = Vector3(-0.866, 0.5, -0.5)
+light_energy = 1.5
 shadow_enabled = true
+shadow_blur = 1.5
 
 [node name="Floor" type="StaticBody3D" parent="."]
 position = Vector3(0, -0.5, 0)
@@ -105,3 +130,5 @@ shape = SubResource("BoxShape3D_ramp")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ramp"]
 mesh = SubResource("BoxMesh_ramp")
 surface_material_override/0 = SubResource("Mat_floor")
+[node name="Enemy" parent="." instance=ExtResource("3_enemy")]
+position = Vector3(0, 1, 10)
