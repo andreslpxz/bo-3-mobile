@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://csgu88i6lngqg"]
 
+
+[ext_resource type="PackedScene" path="res://assets/models/pjs/ghost/source/ghost_jawbone.glb" id="3_ghost"]
 [ext_resource type="Script" uid="uid://cgy64frdd35tq" path="res://scripts/player_controller.gd" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://h2vgeq45rid7" path="res://scenes/Weapon.tscn" id="2_weapon"]
 
@@ -12,6 +14,9 @@ script = ExtResource("1_player")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="ghost_jawbone" parent="." instance=ExtResource("3_ghost")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.9, 0)
 
 [node name="Head" type="Node3D" parent="."]
 position = Vector3(0, 0.7, 0)
