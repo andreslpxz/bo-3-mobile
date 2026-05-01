@@ -10,10 +10,8 @@ extends CanvasLayer
 @onready var joy_left_base:  Control = $JoystickLeft/JoystickLeftBase
 @onready var joy_left_knob:  Control = $JoystickLeft/JoystickLeftKnob
 
-# ─── Joystick Derecho (cámara) ─────────────────────────────
-@onready var joy_right:      Control = $JoystickRight
-@onready var joy_right_base: Control = $JoystickRight/JoystickRightBase
-@onready var joy_right_knob: Control = $JoystickRight/JoystickRightKnob
+# ─── Disparo ───────────────────────────────────────────────
+@onready var btn_shoot: Button = $ButtonsRight/ShootBtn
 
 # ─── Botones ───────────────────────────────────────────────
 @onready var btn_jump:   Button = $ButtonsRight/JumpBtn
@@ -50,6 +48,14 @@ func _connect_buttons() -> void:
 	btn_sprint.button_down.connect(func(): touch_sprint = true)
 	btn_sprint.button_up.connect(func(): touch_sprint = false)
 	btn_reload.pressed.connect(_on_reload_pressed)
+	btn_shoot.button_down.connect(func(): _set_shooting(true))
+	btn_shoot.button_up.connect(func(): _set_shooting(false))
+
+func _set_shooting(shooting: bool) -> void:
+	if not player: return
+	var weapon = player.get_node_or_null("Head/Camera3D/WeaponHolder/Weapon")
+	if weapon:
+		weapon.virtual_shoot = shooting
 
 func _on_reload_pressed() -> void:
 	if not player: return
@@ -61,8 +67,6 @@ func _draw_joysticks() -> void:
 	# Dibuja los círculos de los joysticks via _draw() sobreescrito en los bases
 	joy_left_base.draw.connect(_draw_base.bind(joy_left_base))
 	joy_left_knob.draw.connect(_draw_knob.bind(joy_left_knob))
-	joy_right_base.draw.connect(_draw_base.bind(joy_right_base))
-	joy_right_knob.draw.connect(_draw_knob.bind(joy_right_knob))
 
 func _draw_base(node: Control) -> void:
 	var c := node.size * 0.5
@@ -80,7 +84,20 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventScreenDrag:
 		_handle_drag(event)
 
+func _is_position_on_button(pos: Vector2) -> bool:
+	var buttons = [btn_jump, btn_sprint, btn_reload, btn_shoot]
+	for btn in buttons:
+		if is_instance_valid(btn):
+			var rect = Rect2(btn.global_position, btn.size)
+			if rect.has_point(pos):
+				return true
+	return false
+
 func _handle_touch(event: InputEventScreenTouch) -> void:
+	# Skip if pressing a button
+	if _is_position_on_button(event.position):
+		return
+
 	var screen_mid := get_viewport().get_visible_rect().size.x * 0.5
 
 	if event.pressed:
@@ -90,7 +107,6 @@ func _handle_touch(event: InputEventScreenTouch) -> void:
 		elif event.position.x >= screen_mid and right_touch_index == -1:
 			right_touch_index = event.index
 			right_value = Vector2.ZERO
-			_reset_right_knob()
 	else:
 		if event.index == left_touch_index:
 			left_touch_index = -1
@@ -99,13 +115,13 @@ func _handle_touch(event: InputEventScreenTouch) -> void:
 		elif event.index == right_touch_index:
 			right_touch_index = -1
 			right_value = Vector2.ZERO
-			_reset_right_knob()
 
 func _handle_drag(event: InputEventScreenDrag) -> void:
 	if event.index == left_touch_index:
 		_update_left_knob(event.position)
 	elif event.index == right_touch_index:
 		_update_right_value(event.relative)
+
 
 func _update_left_knob(screen_pos: Vector2) -> void:
 	var base_center := joy_left.global_position + joy_left.size * 0.5
@@ -121,14 +137,8 @@ func _reset_left_knob() -> void:
 
 func _update_right_value(relative: Vector2) -> void:
 	right_value = relative
-	# Mover knob derecho para feedback visual
-	var center := joy_right.size * 0.5
-	var current := joy_right_knob.position + joy_right_knob.size * 0.5
-	var offset := (current - center + relative).limit_length(JOY_RADIUS)
-	joy_right_knob.position = center + offset - joy_right_knob.size * 0.5
 
-func _reset_right_knob() -> void:
-	joy_right_knob.position = joy_right.size * 0.5 - joy_right_knob.size * 0.5
+
 
 func _process(delta: float) -> void:
 	if not player: return
