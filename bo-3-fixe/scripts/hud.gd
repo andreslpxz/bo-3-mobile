@@ -11,17 +11,17 @@ extends CanvasLayer
 @onready var joy_left_knob:  Control = $JoystickLeft/JoystickLeftKnob
 
 # ─── Disparo ───────────────────────────────────────────────
-@onready var btn_shoot: Button = $ButtonsRight/ShootBtn
+@onready var btn_shoot: TextureButton = $ButtonsRight/ShootBtn
 
 # ─── Botones ───────────────────────────────────────────────
-@onready var btn_jump:   Button = $ButtonsRight/JumpBtn
-@onready var btn_sprint: Button = $ButtonsRight/SprintBtn
-@onready var btn_reload: Button = $ButtonsRight/ReloadBtn
+@onready var btn_jump:   TextureButton = $ButtonsRight/JumpBtn
+@onready var btn_sprint: TextureButton = $ButtonsRight/SprintBtn
+@onready var btn_reload: TextureButton = $ButtonsRight/ReloadBtn
 
 # Radio máximo del knob dentro del base
 const JOY_RADIUS := 80.0
 # Sensibilidad del joystick derecho para la cámara
-const LOOK_SENS  := 3.5
+var LOOK_SENS  := 3.5
 
 var player: CharacterBody3D
 var hit_marker_timer := 0.0
@@ -37,6 +37,8 @@ var touch_jump   := false
 var touch_sprint := false
 
 func _ready() -> void:
+	LOOK_SENS = Global.sensitivity * 1750.0 # Aproximación para que la sensibilidad táctil sea similar al ratón proporcionalmente
+
 	await get_tree().process_frame
 	player = get_tree().get_first_node_in_group("player")
 	_draw_joysticks()

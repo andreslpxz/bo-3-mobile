@@ -1,0 +1,131 @@
+[gd_scene load_steps=2 format=3 uid="uid://mainmenu123456"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_menu"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="MainPanel" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="MainPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "BO3 MOBILE"
+horizontal_alignment = 1
+
+[node name="PlayBtn" type="Button" parent="MainPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "JUGAR"
+
+[node name="SettingsBtn" type="Button" parent="MainPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "AJUSTES"
+
+[node name="SettingsPanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="SettingsPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "AJUSTES"
+horizontal_alignment = 1
+
+[node name="FovLabel" type="Label" parent="SettingsPanel/VBox"]
+layout_mode = 2
+text = "FOV: 90"
+
+[node name="FovSlider" type="HSlider" parent="SettingsPanel/VBox"]
+layout_mode = 2
+min_value = 60.0
+max_value = 120.0
+value = 90.0
+
+[node name="SensLabel" type="Label" parent="SettingsPanel/VBox"]
+layout_mode = 2
+text = "Sensibilidad: 0.002"
+
+[node name="SensSlider" type="HSlider" parent="SettingsPanel/VBox"]
+layout_mode = 2
+min_value = 0.5
+max_value = 10.0
+step = 0.1
+value = 2.0
+
+[node name="VolLabel" type="Label" parent="SettingsPanel/VBox"]
+layout_mode = 2
+text = "Volumen (dB): 0"
+
+[node name="VolSlider" type="HSlider" parent="SettingsPanel/VBox"]
+layout_mode = 2
+min_value = -40.0
+max_value = 10.0
+value = 0.0
+
+[node name="GraphicsLabel" type="Label" parent="SettingsPanel/VBox"]
+layout_mode = 2
+text = "Gráficos:"
+
+[node name="GraphicsOption" type="OptionButton" parent="SettingsPanel/VBox"]
+layout_mode = 2
+item_count = 3
+selected = 1
+popup/item_0/text = "Bajo"
+popup/item_0/id = 0
+popup/item_1/text = "Medio"
+popup/item_1/id = 1
+popup/item_2/text = "Alto"
+popup/item_2/id = 2
+
+[node name="BackBtn" type="Button" parent="SettingsPanel/VBox"]
+layout_mode = 2
+text = "VOLVER"
+
+[connection signal="pressed" from="MainPanel/PlayBtn" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MainPanel/SettingsBtn" to="." method="_on_settings_pressed"]
+[connection signal="value_changed" from="SettingsPanel/VBox/FovSlider" to="." method="_on_fov_slider_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/VBox/SensSlider" to="." method="_on_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/VBox/VolSlider" to="." method="_on_vol_slider_value_changed"]
+[connection signal="item_selected" from="SettingsPanel/VBox/GraphicsOption" to="." method="_on_graphics_option_item_selected"]
+[connection signal="pressed" from="SettingsPanel/VBox/BackBtn" to="." method="_on_back_pressed"]
